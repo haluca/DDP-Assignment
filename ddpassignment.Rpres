@@ -1,0 +1,56 @@
+The making of... 
+===
+author: Haluca
+date: `r date()`
+
+Introduction
+========================================================
+
+Forecasting mortality is a major concern for life-insurance and pension companies. As an example see this simple model:
+
+https://haluca.shinyapps.io/ddpassignment/
+
+The model calculates the expected number of deaths based on : 
+- a. The current number of people of 65 year or older
+- b. The number of people 65 year or older that died last year
+- c. The percentual yearly growth of people getting 65 year 
+- d. The expected yearly growth life-expectancy
+
+
+Estimating example Code
+========================================================
+
+```{r }
+  # Example a = 1000000, b = 100000,
+  #         c = +1.6%,     d = +2 months/year
+  exp<-1000000/100000  # avg life expectancy  
+  yeardec<-data.frame(year=1:6,dec=0)
+  # dataframe for calculations coming 6 years 
+  for (i in 1:6) {
+   exppop<-1000000*(1.016)^i #: +1.6%/year 
+   expage<-exp+2/12*i       #: +2mth/year
+   yeardec$year[i]<-2016+i
+   yeardec$dec[i]<-exppop/expage }
+```
+
+Plotting the estimations
+========================================================
+
+```{r, echo=FALSE}
+      plot(yeardec$year,yeardec$dec,xlab='year',ylab='persons',col='blue',lwd=10,main='expected deaths per year 65') 
+```
+
+The real thing....
+========================================================
+
+I'm Working on a more sophisticated model
+- Seasonality (less resistance end of winters)
+- Local conditions (population, conditions)
+- Based on extensive analyses on different public datasources
+
+Shortterm predictions (what can we expect next week..)
+- Weather conditions (extensive heat, cold)
+- Disease spreads (flu)
+
+But that is outside the scope of this assignment :)  
+
